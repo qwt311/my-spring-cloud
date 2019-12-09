@@ -1,0 +1,25 @@
+server:
+  port: 8764
+spring:
+  application:
+    name: test-service-ribbon
+eureka:
+  client:
+    #服务注册开关
+    registerWithEureka: true
+    #服务发现开关
+    fetchRegistry: true
+    #Eureka客户端与Eureka服务端进行交互的地址，多个中间用逗号分隔
+    serviceUrl:
+      defaultZone: http://39.107.44.66:8761/eureka/
+  instance:
+    #将自己的ip地址注册到Eureka服务中
+    prefer-ip-address:  true
+    ip-address: 39.107.44.66
+    #指定实例id
+    instance-id: ${spring.application.name}:${server.port}
+logging:
+  file:
+    max-size: 100MB
+    max-history: 30
+  path: /data/cloud/logs/test-service-ribbon/

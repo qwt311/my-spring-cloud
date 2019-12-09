@@ -1,0 +1,30 @@
+server:
+  port: 8762
+spring:
+  application:
+    name: test-eureka-client
+
+eureka:
+  client:
+    registerWithEureka: true #服务注册开关
+    fetchRegistry: true #服务发现开关
+    serviceUrl: #Eureka客户端与Eureka服务端进行交互的地址，多个中间用逗号分隔
+      defaultZone: http://39.107.44.66:8761/eureka/
+  instance:
+    # 将自己的ip地址注册到Eureka服务中
+    prefer-ip-address:  true
+    # 自己真实环境的ip地址，生产环境可以为对外的ip
+    ip-address: 39.107.44.66
+    #指定实例id
+    instance-id: ${spring.application.name}:${server.port}:${random.value}
+    hostname: 39.107.44.66
+    non-secure-port: 8762
+
+logging:
+  file:
+    max-size: 100MB
+    max-history: 30
+  path: /data/cloud/logs/test-eureka-client/
+  level:
+    # 默认打印级别为info
+    root: info
