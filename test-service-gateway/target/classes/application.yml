@@ -1,0 +1,58 @@
+server:
+  port: 8764
+
+spring:
+  application:
+    name: service-gateway
+#  profiles:
+#    active: after_route
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          # 表名gateway开启服务注册和发现功能,默认关闭，若开启，则gateway会自动根据服务发现为每一个服务创建一个router，
+          # 这个router 将以服务名开头的请求路径转发到对应的服务
+          enabled: false
+          # 将请求路径上的服务名称配置为小写，因为服务注册到eureka server 时服务名称自动转为大写了
+          lower-case-service-id: true
+      routes:
+        - id: server-api-auth
+          uri: lb://SERVER-API
+          predicates:
+            - Path=/api/v2.0/auth/**
+
+        - id: server-api-sms
+          uri: lb://SERVER-API
+          predicates:
+            - Path=/api/v2.0/sms/**
+
+eureka:
+  client:
+    registryFetchIntervalSeconds: 300  # 从eureka拉取服务进行更新时间间隔,即检测服务是否正常,默认30 秒一个获取
+    instanceInfoReplicationIntervalSeconds: 300  # 检测eureka server 集群中注册服务的变化，如提供方增加了服务从一个变为两个,默认30秒一次检测
+    initialInstanceInfoReplicationIntervalSeconds: 40  # 表名最开始将本实例信息复制（即将相关信息注册）到eureka server 需要多长时间
+    eurekaServiceUrlPollIntervalSeconds: 300  # 多长时间检测eureka server 集群节点变化,默认300秒
+    eurekaServerConnectTimeoutSeconds: 6  # 心跳检测连接到eureka server 的超时时间，同时也是多长时间从连接池中获取连接 默认5秒
+    eurekaServerReadTimeoutSeconds: 8  # 心跳检测连接到eureka server ,读取超时时间
+    eurekaServerTotalConnections: 200  # 默认连接到所有eureka server 的连接数量，默认200个
+    eurekaServerTotalConnectionsPerHost: 50  # 连接到单个eureka server 的数量，默认50个
+    service-url:
+      defaultZone: http://172.19.60.121:8761/eureka/
+  instance:
+    prefer-ip-address:  true  # 将自己的ip地址注册到Eureka服务中
+    # 自己真实环境的ip地址，生产环境可以为对外的ip
+    ip-address: 172.19.64.244
+    instance-id: ${spring.application.name}:${server.port}:${random.value} #指定实例id
+    #参数用于定义服务续约任务的调用间隔时间，默认为30秒
+    lease-renewal-interval-in-seconds: 30
+    # 参数用于定义服务失效的时间，默认为90秒
+    lease-expiration-duration-in-seconds: 90
+
+logging:
+  file:
+    max-size: 100MB
+    max-history: 30
+  path: /data/cloud/logs/test-service-gateway/
+  level:
+    # 默认打印级别为info
+    root: info
