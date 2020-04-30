@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cloud.eureka.client.dao.CloudAuthUserPersonalMapper" >
+  <resultMap id="BaseResultMap" type="com.cloud.eureka.client.entity.CloudAuthUserPersonal" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="id_card_no" property="idCardNo" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="bank" property="bank" jdbcType="VARCHAR" />
+    <result column="bank_card_no" property="bankCardNo" jdbcType="VARCHAR" />
+    <result column="bank_phone" property="bankPhone" jdbcType="VARCHAR" />
+    <result column="auth_time" property="authTime" jdbcType="TIMESTAMP" />
+    <result column="remarks1" property="remarks1" jdbcType="VARCHAR" />
+    <result column="remarks2" property="remarks2" jdbcType="VARCHAR" />
+    <result column="remarks3" property="remarks3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, id_card_no, name, phone, bank, bank_card_no, bank_phone, auth_time, remarks1, 
+    remarks2, remarks3
+  </sql>
+
+  <insert id="insertSelectiveNew" parameterType="com.cloud.eureka.client.entity.CloudAuthUserPersonal" >
+    insert into cloud_auth_personal_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="idCardNo != null" >
+        id_card_no,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="bank != null" >
+        bank,
+      </if>
+      <if test="bankCardNo != null" >
+        bank_card_no,
+      </if>
+      <if test="bankPhone != null" >
+        bank_phone,
+      </if>
+      <if test="authTime != null" >
+        auth_time,
+      </if>
+      <if test="remarks1 != null" >
+        remarks1,
+      </if>
+      <if test="remarks2 != null" >
+        remarks2,
+      </if>
+      <if test="remarks3 != null" >
+        remarks3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="idCardNo != null" >
+        #{idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null" >
+        #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCardNo != null" >
+        #{bankCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankPhone != null" >
+        #{bankPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="authTime != null" >
+        #{authTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks1 != null" >
+        #{remarks1,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks2 != null" >
+        #{remarks2,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks3 != null" >
+        #{remarks3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectListWithConditionNew" resultMap="BaseResultMap" parameterType="com.cloud.eureka.client.entity.CloudAuthUserPersonal">
+    select
+    <include refid="Base_Column_List" />
+    from cloud_auth_personal_info
+    where 1 = 1
+    <if test="idCardNo != null" >
+      and id_card_no = #{idCardNo,jdbcType=VARCHAR}
+    </if>
+    <if test="name != null" >
+      and name = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="phone != null" >
+      and phone = #{phone,jdbcType=VARCHAR}
+    </if>
+    <if test="bank != null" >
+      and bank = #{bank,jdbcType=VARCHAR}
+    </if>
+    <if test="bankCardNo != null" >
+      and bank_card_no = #{bankCardNo,jdbcType=VARCHAR}
+    </if>
+    <if test="bankPhone != null" >
+      and bank_phone = #{bankPhone,jdbcType=VARCHAR}
+    </if>
+    <if test="authTime != null" >
+      and auth_time = #{authTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="remarks1 != null" >
+      and remarks1 = #{remarks1,jdbcType=VARCHAR}
+    </if>
+    <if test="remarks2 != null" >
+      and remarks2 = #{remarks2,jdbcType=VARCHAR}
+    </if>
+    <if test="remarks3 != null" >
+      and remarks3 = #{remarks3,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>

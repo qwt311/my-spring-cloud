@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cloud.eureka.client.dao.CloudAuthUserEntMapper" >
+  <resultMap id="BaseResultMap" type="com.cloud.eureka.client.entity.CloudAuthUserEnt" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="legal_name" property="legalName" jdbcType="VARCHAR" />
+    <result column="org_code" property="orgCode" jdbcType="VARCHAR" />
+    <result column="licence_code" property="licenceCode" jdbcType="VARCHAR" />
+    <result column="auth_time" property="authTime" jdbcType="TIMESTAMP" />
+    <result column="remarks1" property="remarks1" jdbcType="VARCHAR" />
+    <result column="remarks2" property="remarks2" jdbcType="VARCHAR" />
+    <result column="remarks3" property="remarks3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, name, legal_name, org_code, licence_code, auth_time, remarks1, remarks2, 
+    remarks3
+  </sql>
+
+  <insert id="insertSelective" parameterType="com.cloud.eureka.client.entity.CloudAuthUserEnt" >
+    insert into cloud_auth_user_ent
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="legalName != null" >
+        legal_name,
+      </if>
+      <if test="orgCode != null" >
+        org_code,
+      </if>
+      <if test="licenceCode != null" >
+        licence_code,
+      </if>
+      <if test="authTime != null" >
+        auth_time,
+      </if>
+      <if test="remarks1 != null" >
+        remarks1,
+      </if>
+      <if test="remarks2 != null" >
+        remarks2,
+      </if>
+      <if test="remarks3 != null" >
+        remarks3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="legalName != null" >
+        #{legalName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="licenceCode != null" >
+        #{licenceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="authTime != null" >
+        #{authTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks1 != null" >
+        #{remarks1,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks2 != null" >
+        #{remarks2,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks3 != null" >
+        #{remarks3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectListWithCondition" resultMap="BaseResultMap" parameterType="com.cloud.eureka.client.entity.CloudAuthUserEnt">
+    select
+    <include refid="Base_Column_List" />
+    from cloud_auth_user_ent
+    where 1 = 1
+    <if test="code != null" >
+      and code = #{code,jdbcType=VARCHAR}
+    </if>
+    <if test="name != null" >
+      and name = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="legalName != null" >
+      and legal_name = #{legalName,jdbcType=VARCHAR}
+    </if>
+    <if test="orgCode != null" >
+      and org_code = #{orgCode,jdbcType=VARCHAR}
+    </if>
+    <if test="licenceCode != null" >
+      and licence_code = #{licenceCode,jdbcType=VARCHAR}
+    </if>
+    <if test="authTime != null" >
+      and auth_time = #{authTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="remarks1 != null" >
+      and remarks1 = #{remarks1,jdbcType=VARCHAR}
+    </if>
+    <if test="remarks2 != null" >
+      and remarks2 = #{remarks2,jdbcType=VARCHAR}
+    </if>
+    <if test="remarks3 != null" >
+      and remarks3 = #{remarks3,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+</mapper>

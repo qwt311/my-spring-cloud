@@ -1,5 +1,5 @@
+com\test\service\gateway\fifter\HostAddrKeyResolver.class
 com\test\service\gateway\fifter\TokenFilter.class
 com\test\service\gateway\TestServiceGateWayApplication.class
-com\test\service\gateway\fifter\HostAddrKeyResolver.class
 com\test\service\gateway\fifter\RequestTimeGatewayFilterFactory$config.class
 com\test\service\gateway\fifter\RequestTimeGatewayFilterFactory.class

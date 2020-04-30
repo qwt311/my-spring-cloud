@@ -37,7 +37,7 @@ eureka:
     eurekaServerTotalConnections: 200  # 默认连接到所有eureka server 的连接数量，默认200个
     eurekaServerTotalConnectionsPerHost: 50  # 连接到单个eureka server 的数量，默认50个
     service-url:
-      defaultZone: http://172.19.60.121:8761/eureka/
+      defaultZone: http://39.107.44.66:8761/eureka/
   instance:
     prefer-ip-address:  true  # 将自己的ip地址注册到Eureka服务中
     # 自己真实环境的ip地址，生产环境可以为对外的ip

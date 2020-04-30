@@ -17,8 +17,8 @@
     <name>my-spring-cloud</name>
 
     <modules>
-        <module>test-eureka-client</module>
-        <module>test-eureka-server</module>
+        <module>cloud-eureka-client</module>
+        <module>cloud-eureka-server</module>
         <module>test-service-gateway</module>
         <module>cloud-service-common</module>
     </modules>
@@ -40,6 +40,7 @@
         <poi.ooxml.version>3.7</poi.ooxml.version>
         <swagger.version>2.7.0</swagger.version>
         <org.lombok.version>1.16.22</org.lombok.version>
+        <hikariCP.version>2.7.9</hikariCP.version>
     </properties>
 
     <dependencies>
