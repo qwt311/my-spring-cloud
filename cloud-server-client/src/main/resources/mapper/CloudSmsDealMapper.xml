@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cloud.server.client.dao.CloudSmsDealMapper" >
+  <resultMap id="BaseResultMap" type="com.cloud.server.client.entity.CloudSmsDeal" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="request_no" property="requestNo" jdbcType="VARCHAR" />
+    <result column="customer_no" property="customerNo" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="request_time" property="requestTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="charge_status" property="chargeStatus" jdbcType="INTEGER" />
+    <result column="charge_time" property="chargeTime" jdbcType="TIMESTAMP" />
+    <result column="biz_name" property="bizName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, request_no, customer_no, mobile, code, start_time, end_time, request_time,
+    status, charge_status, charge_time, biz_name
+  </sql>
+
+  <insert id="insertSelective" parameterType="com.cloud.server.client.entity.CloudSmsDeal" >
+    insert into cloud_sms_deal
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="requestNo != null" >
+        request_no,
+      </if>
+      <if test="customerNo != null" >
+        customer_no,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="requestTime != null" >
+        request_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="chargeStatus != null" >
+        charge_status,
+      </if>
+      <if test="chargeTime != null" >
+        charge_time,
+      </if>
+      <if test="bizName != null" >
+        biz_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="requestNo != null" >
+        #{requestNo,jdbcType=VARCHAR},
+      </if>
+      <if test="customerNo != null" >
+        #{customerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="requestTime != null" >
+        #{requestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="chargeStatus != null" >
+        #{chargeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="chargeTime != null" >
+        #{chargeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bizName != null" >
+        #{bizName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectWithCondition" resultMap="BaseResultMap" parameterType="com.cloud.server.client.entity.CloudSmsDeal">
+    select
+    <include refid="Base_Column_List" />
+    from cloud_sms_deal
+    where 1 = 1
+    <if test="id != null">
+      and id = #{id,jdbcType=BIGINT}
+    </if>
+    <if test="requestNo != null" >
+      and request_no = #{requestNo,jdbcType=VARCHAR}
+    </if>
+    <if test="customerNo != null" >
+      and customer_no = #{customerNo,jdbcType=VARCHAR}
+    </if>
+    <if test="mobile != null" >
+      and mobile = #{mobile,jdbcType=VARCHAR}
+    </if>
+    <if test="code != null" >
+      and code = #{code,jdbcType=VARCHAR}
+    </if>
+    <if test="startTime != null" >
+      and start_time = #{startTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="endTime != null" >
+      and end_time = #{endTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="requestTime != null" >
+      and request_time = #{requestTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="status != null" >
+      and status = #{status,jdbcType=INTEGER}
+    </if>
+    <if test="chargeStatus != null" >
+      and charge_status = #{chargeStatus,jdbcType=INTEGER}
+    </if>
+    <if test="chargeTime != null" >
+      and charge_time = #{chargeTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="bizName != null" >
+      and biz_name = #{bizName,jdbcType=VARCHAR}
+    </if>
+    ORDER BY request_time DESC
+  </select>
+
+</mapper>

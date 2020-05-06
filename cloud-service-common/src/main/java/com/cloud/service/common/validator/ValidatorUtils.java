@@ -41,7 +41,7 @@ public class ValidatorUtils {
      * @param object 待校验对象
      * @param groups 待校验的组
      */
-    public static void validateEntity(Object object, Class<?>... groups) {
+    public static void validateEntity(Object object, Class<?>... groups) throws ValidatedException {
         Set<ConstraintViolation<Object>> constraintViolations = validator.validate(object, groups);
         if (!constraintViolations.isEmpty()) {
             ConstraintViolation<Object> constraint = constraintViolations.iterator().next();

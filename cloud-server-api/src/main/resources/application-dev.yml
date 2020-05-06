@@ -1,0 +1,103 @@
+eureka:
+  client:
+    registryFetchIntervalSeconds: 30  # 从eureka拉取服务进行更新时间间隔,即检测服务是否正常,默认30 秒一个获取
+    instanceInfoReplicationIntervalSeconds: 30  # 检测eureka server 集群中注册服务的变化，如提供方增加了服务从一个变为两个,默认30秒一次检测
+    initialInstanceInfoReplicationIntervalSeconds: 40  # 表名最开始将本实例信息复制（即将相关信息注册）到eureka server 需要多长时间
+    eurekaServiceUrlPollIntervalSeconds: 300  # 多长时间检测eureka server 集群节点变化,默认300秒
+    service-url:
+      # defaultZone: http://127.0.0.1:8761/eureka/,http://127.0.0.1:8762/eureka/,http://127.0.0.1:8763/eureka/
+      defaultZone: http://127.0.0.1:8761/eureka/
+  instance:
+    # 将自己的ip地址注册到Eureka服务中
+    prefer-ip-address:  true
+    # 自己的真实ip地址
+    ip-address: 127.0.0.1
+    instance-id: ${spring.application.name}:${server.port}:${random.value} #指定实例id
+    #参数用于定义服务续约任务的调用间隔时间，默认为30秒
+    lease-renewal-interval-in-seconds: 30
+    # 参数用于定义服务失效的时间，默认为90秒
+    lease-expiration-duration-in-seconds: 90
+
+# 开启熔断功能
+feign:
+  hystrix:
+    enabled: true
+  # 使用OKHTTP 连接，默认为JDK的HttpClient
+  okhttp:
+    enabled: true
+
+ribbon:
+  # 读取超时
+  ReadTimeout: 1000
+  # 连接超时
+  ConnectTimeout: 1000
+  #同一台实例最大重试次数,不包括首次调用
+  MaxAutoRetries: 1
+  #重试负载均衡其他的实例最大重试次数,不包括首次调用,如果还失败就切换下个实例访问
+  MaxAutoRetriesNextServer: 1
+  #对所有的操作请求都进行重试，如果是get则可以，如果是post,put等操作没有实现幂等的情况下是很危险的，
+  # 所以默认设置为false 
+  OkToRetryOnAllOperations: true
+
+# 针对具体的服务模块指定特殊的参数配置
+api-auth-sms:
+  ribbon:
+    ReadTimeout: 2000
+    # 指定负载均衡规则，也可以自定义，但必须要继承AbstractLoadBalancerRule这个类,
+    # 但是不能放在@ComponentScan所扫描的当前包和子包下
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule
+
+#如果配置ribbon的重试，hystrix 的超时时间要大于ribbon的超时时间，ribbon才会重试
+#hystrix的超时时间=(1 + MaxAutoRetries )*(MaxAutoRetriesNextServer + 1) * (ReadTimeout + ConnectTimeout) 比较好，具体看需求
+hystrix:
+  command:
+    # 也可以针对据具体服务设置，如： 接口服务名称#方法名称(接口参数类型) ,具体下面所示
+    #      ApiAuthSmsService#authPerson(String):
+    ApiAuthSmsService#readTimeOut(Long):
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 6000
+          # 若要feign转发用户请求的header信息，
+          # 则需要方法一:一: 实现RequestInterceptor 接口，并交给spring管理
+          #             二：具体的feign转发接口@FeignClient 注解指定参数configuration={实现了接口的类}
+          #             三：需要修改feign隔离策略为:SEMAPHORE （官方默认为Thread），因此此方式不推荐
+          # 方法二：自定义hystrix 隔离策略
+          # strategy: SEMAPHORE
+      circuitBreaker:
+        # 判断熔断的最少请求数,当在配置时间窗口(metrics.rollingStats.timeInMilliseconds) 内达到此数量后，才会进行熔断与否的判断。默认20个
+        requestVolumeThreshold: 1
+        # 断路多久以后开始尝试是否恢复，默认5s
+        sleepWindowInMilliseconds: 10000
+        # 出错百分比阈值，当达到此阈值后，开始短路。默认50%(即失败达到50%及以上时进行熔断)
+        errorThresholdPercentage: 50
+      metrics:
+        rollingStats:
+          # 设置窗口滚动的时间，默认10秒
+          timeInMilliseconds: 10000
+          # 设置统计滚动窗口的桶数量，默认10个桶  必须满足：timeInMilliseconds % numBuckets = 0
+          # 存放在每个桶的时间内请求的成功数、失败数、决绝数、超时数
+          # 在高并发的环境里，每个桶的时间长度建议大于100ms
+          numBuckets: 10
+        rollingPercentile:
+          # 设置统计滚动百分比窗口的持续时间，用来计算百分比
+          timeInMilliseconds: 60000
+          # 设置桶的数量，必须满足  timeInMilliseconds % numBuckets = 0
+          numBuckets: 6
+          # 每个桶内最大容纳的请求数量，默认100个，且只保留最近的100个
+          bucketSize: 100
+        healthSnapshot:
+          # 统计滚动窗口的百分比采样时间
+          intervalInMilliseconds: 500
+
+# 定义打印日志信息，用于注入logback-spring.xml 配置文件中
+log:
+  back:
+    dir: /data/logs/${spring.application.name}
+  maxHistory: 365
+  level: info

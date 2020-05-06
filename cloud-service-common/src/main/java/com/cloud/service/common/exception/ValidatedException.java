@@ -5,7 +5,7 @@ package com.cloud.service.common.exception;
  * @author wentao.qiao
  * @DateTime 2020/4/30 13:56
  */
-public class ValidatedException extends RuntimeException {
+public class ValidatedException extends Exception {
 
     private static final long serialVersionUID = 1L;
 

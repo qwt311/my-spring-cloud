@@ -48,7 +48,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ApiResult httpMessageNotReadableException(HttpMessageNotReadableException e) {
         LOGGER.error("Required request body is missing:{}", e.getMessage(), e);
-        return ApiResult.buildApiResult(CommonCodeEnum.ERROR);
+        return ApiResult.buildApiResult(CommonCodeEnum.ERROR.success(),CommonCodeEnum.ERROR.code(),"请求参数不能为空");
     }
 
     @ExceptionHandler(DuplicateKeyException.class)
@@ -78,6 +78,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ApiResult handleException(Exception e) {
         LOGGER.error("服务异常{}", e.getMessage(), e);
-        return ApiResult.buildApiResult(CommonCodeEnum.ERROR);
+        return ApiResult.buildApiResult(CommonCodeEnum.ERROR.success(),CommonCodeEnum.ERROR.code(),e.getMessage());
     }
 }

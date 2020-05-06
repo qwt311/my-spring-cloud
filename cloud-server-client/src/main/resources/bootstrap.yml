@@ -1,0 +1,13 @@
+# 因spring cloud 启动会优先加载bootstarap.yml（早于application.yml配置），
+# 因此logback-spring.xml中需要spring的配置需要定义在bootstrap.yml中,如：spring.application.name
+spring:
+  application:
+    name: cloud-server-client
+logging:
+  config: classpath:logback-spring.xml
+#因spring cloud 会加载logback配置文件两次，因此需要将其所需配置信息定义在bootstrap.yml中，默认level为debug，
+#加载application.yml中相关信息时会重写日志配置文件
+log:
+  back:
+    dir: /data/logs/${spring.application.name}
+  level: warn

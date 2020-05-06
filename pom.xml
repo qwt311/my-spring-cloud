@@ -17,8 +17,9 @@
     <name>my-spring-cloud</name>
 
     <modules>
-        <module>cloud-eureka-client</module>
+        <module>cloud-server-client</module>
         <module>cloud-eureka-server</module>
+        <module>cloud-server-api</module>
         <module>test-service-gateway</module>
         <module>cloud-service-common</module>
     </modules>
