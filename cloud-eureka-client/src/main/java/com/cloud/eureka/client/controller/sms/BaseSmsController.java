@@ -31,10 +31,6 @@ public class BaseSmsController {
      */
     static final long DEFAULT_SMS_CODE_DURATION = 5 * MINUTES;
 
-    static final String STATUS = "status";
-
-    static final String ERROR_MSG = "errorMsg";
-
     @Autowired
     protected SendSmsService sendSmsService;
 
@@ -56,8 +52,8 @@ public class BaseSmsController {
         deal.setRequestNo(sendSmsEntity.getRequestNo());
         deal.setMobile(sendSmsEntity.getMobile());
         deal.setBizName(sendSmsEntity.getBizName());
-        List<CloudSmsDeal> lmlySmsDealList = cloudSmsDealService.selectWithCondition(deal);
-        if(lmlySmsDealList.size() > 0){
+        List<CloudSmsDeal> cloudSmsDealList = cloudSmsDealService.selectWithCondition(deal);
+        if(cloudSmsDealList.size() > 0){
             log.error("用户编号:{},交易流水号重复", sendSmsEntity.getCustomerNo());
             return ApiResult.buildApiResult(CommonCodeEnum.COMMON_USE.success(),CommonCodeEnum.COMMON_USE.code(),"请求流水号重复");
         }
@@ -67,9 +63,9 @@ public class BaseSmsController {
         deal.setMobile(sendSmsEntity.getMobile());
         deal.setStatus(1);
         deal.setBizName(sendSmsEntity.getBizName());
-        lmlySmsDealList = cloudSmsDealService.selectWithCondition(deal);
-        if(lmlySmsDealList.size() > 0){
-            deal = lmlySmsDealList.get(0);
+        cloudSmsDealList = cloudSmsDealService.selectWithCondition(deal);
+        if(cloudSmsDealList.size() > 0){
+            deal = cloudSmsDealList.get(0);
             //判断是否在一分钟内
             Date now = new Date();
             Date startTime = deal.getStartTime();

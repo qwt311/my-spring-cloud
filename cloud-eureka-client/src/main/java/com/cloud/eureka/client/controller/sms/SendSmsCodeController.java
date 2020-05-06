@@ -60,7 +60,6 @@ public class SendSmsCodeController extends BaseSmsController {
                     throw new BusinessException("模板参数不能为空");
                 }
             }catch (Exception e){
-                body.put(ERROR_MSG,"请求参数中模板参数错误");
                 log.error("{}请求模板参数错误:{}", API_DESC, e.getMessage());
                 return ApiResult.buildApiResult(false,RSP_CODE,"请求模板格式不正确");
             }

@@ -13,10 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Slf4j
 public class BaseAuthController {
 
-    protected static final String STATUS = "status";
-
-    protected static final String ERROR_MSG = "errorMsg";
-
     @Autowired
     protected AuthService authService;
 

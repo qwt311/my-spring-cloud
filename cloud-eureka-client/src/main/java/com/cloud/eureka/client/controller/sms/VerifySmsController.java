@@ -47,12 +47,12 @@ public class VerifySmsController extends BaseSmsController {
             deal.setCustomerNo(customerNo);
             deal.setMobile(mobile);
             deal.setStatus(1);
-            List<CloudSmsDeal> lmlySmsDealList = cloudSmsDealService.selectWithCondition(deal);
-            if(lmlySmsDealList.isEmpty()){
+            List<CloudSmsDeal> cloudSmsDealList = cloudSmsDealService.selectWithCondition(deal);
+            if(cloudSmsDealList.isEmpty()){
                 log.error("{}用户编号为:{}的手机号:{}查询不到信息", API_DESC, customerNo, mobile);
                 return ApiResult.buildApiResult(false,RSP_CODE,"当前手机号和用户编号查询不到相关信息");
             }else{
-                smsDeal = lmlySmsDealList.get(0);
+                smsDeal = cloudSmsDealList.get(0);
                 now = THREAD_LOCAL.get().parse(THREAD_LOCAL.get().format(new Date()));
             }
         }catch (Exception e){
@@ -75,7 +75,6 @@ public class VerifySmsController extends BaseSmsController {
             }
         }
         Map<String, Object> body = new HashMap<> (3);
-        body.put(STATUS,"SUCCESS");
         body.put("requestNo", verifySmsEntity.getRequestNo());
         return ApiResult.buildApiResult(CommonCodeEnum.SUCCESS,body);
     }
